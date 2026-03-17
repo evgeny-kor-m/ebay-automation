@@ -1,0 +1,17 @@
+[32mINFO    [0m app:conftest.py:74 --- RUN TEST: test_search_items_under_price ---
+[32mINFO    [0m app.test_search_items_under_price:conftest.py:75 Init browser: chrome (Headless: True)
+[32mINFO    [0m app.test_search_items_under_price:test_search_cart.py:15 ============================================================
+[32mINFO    [0m app.test_search_items_under_price:test_search_cart.py:16 TEST: Search items under price
+[32mINFO    [0m app.test_search_items_under_price:test_search_cart.py:17 ============================================================
+[32mINFO    [0m app.test_search_items_under_price:search_page.py:30 🔍 SearchPage initialized
+[32mINFO    [0m app.test_search_items_under_price:base_page.py:19 📍 Navigating to: https://www.ebay.com
+[35mDEBUG   [0m app.test_search_items_under_price:base_page.py:21 ✓ Page loaded: https://www.ebay.com/
+[32mINFO    [0m app.test_search_items_under_price:search_page.py:34 🔎 Searching for: 'shoes'
+[32mINFO    [0m app.test_search_items_under_price:base_page.py:41 ⌨️ Filling 'Search input' with: shoes
+[35mDEBUG   [0m app.test_search_items_under_price:base_page.py:45 ✓ Filled successfully: Search input
+[32mINFO    [0m app.test_search_items_under_price:base_page.py:27 🖱️ Clicking: Search button
+[31m[1mERROR   [0m app.test_search_items_under_price:base_page.py:33 ❌ Failed to click: Search button
+[31m[1mERROR   [0m app.test_search_items_under_price:base_page.py:34 Error: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#gh-btn")
+[32mINFO    [0m app:conftest.py:85 --- END TEST: test_search_items_under_price ---

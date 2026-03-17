@@ -6,7 +6,7 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 playwright install
 playwright install-deps
-
+psycopg2
 
 
 Параллельный запуск (Требование №1):

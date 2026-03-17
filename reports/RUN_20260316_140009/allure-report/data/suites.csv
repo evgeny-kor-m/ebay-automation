@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"
+    Test: Search for items under specific price
+    
+    Args:
+        page: Playwright page fixture with attached logger
+    ","31724","test_search_items_under_price","tests","2026-03-16","broken","2026-03-16","","test_search_cart","",""

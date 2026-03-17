@@ -1,0 +1,16 @@
+2026-03-16 13:59:21 - INFO - [conftest.py:75] - Init browser: chrome (Headless: True)
+2026-03-16 13:59:31 - INFO - [test_search_cart.py:15] - ============================================================
+2026-03-16 13:59:31 - INFO - [test_search_cart.py:16] - TEST: Search items under price
+2026-03-16 13:59:31 - INFO - [test_search_cart.py:17] - ============================================================
+2026-03-16 13:59:31 - INFO - [search_page.py:30] - 🔍 SearchPage initialized
+2026-03-16 13:59:31 - INFO - [base_page.py:19] - 📍 Navigating to: https://www.ebay.com
+2026-03-16 13:59:33 - DEBUG - [base_page.py:21] - ✓ Page loaded: https://www.ebay.com/
+2026-03-16 13:59:33 - INFO - [search_page.py:34] - 🔎 Searching for: 'shoes'
+2026-03-16 13:59:33 - INFO - [base_page.py:41] - ⌨️ Filling 'Search input' with: shoes
+2026-03-16 13:59:33 - DEBUG - [base_page.py:45] - ✓ Filled successfully: Search input
+2026-03-16 13:59:33 - INFO - [base_page.py:27] - 🖱️ Clicking: Search button
+2026-03-16 14:00:03 - ERROR - [base_page.py:33] - ❌ Failed to click: Search button
+2026-03-16 14:00:03 - ERROR - [base_page.py:34] - Error: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#gh-btn")
+

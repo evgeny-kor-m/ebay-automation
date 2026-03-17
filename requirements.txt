@@ -20,3 +20,5 @@ pytest-xdist>=3.3.0                  # Parallel test execution
 pytest-logger>=0.5.1                 # Advanced logging for troubleshooting
 
 pytest-cov>=4.1.0  # Code covering (Optional)
+
+psycopg2

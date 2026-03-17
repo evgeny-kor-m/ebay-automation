@@ -3,16 +3,10 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Load .env into (os.environ)
 load_dotenv()
 
 class ConfigReader:
-    """
-The class implements priority (Data-Driven):
-1. Environment variables / .env (high priority)
-2. appsettings.json (default values)
-    """
-    
+
     _config = None
 
     @staticmethod
@@ -31,14 +25,7 @@ The class implements priority (Data-Driven):
 
     @staticmethod
     def get_value(key_path, default=None):
-        """
-        Retrieval priority:
-        1. Environment variable (e.g., BROWSERSETTINGS_HEADLESS)
-        2. Value from appsettings.json (BrowserSettings.Headless)
-        3. Default value
-        """
-        # 1. Check Environment Variables / .env
-        # move "BrowserSettings.Headless" -> "BROWSERSETTINGS_HEADLESS"
+
         env_key = key_path.replace('.', '_').upper()
         env_value = os.getenv(env_key)
         
@@ -52,7 +39,6 @@ The class implements priority (Data-Driven):
             except ValueError:
                 return env_value
 
-        # 2. Search in appsettings JSON
         keys = key_path.split('.')
         data = ConfigReader._get_config()
         
@@ -70,7 +56,7 @@ The class implements priority (Data-Driven):
     def get_full_path(path_key):
 
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        base_dir = ConfigReader.get_value("Paths.BaseReportDir", "reports")
+        base_dir = ConfigReader.get_value("Paths.BasetDir", "reports")
         sub_dir = ConfigReader.get_value(f"Paths.{path_key}", path_key.lower())
         
         full_path = os.path.join(project_root, base_dir, sub_dir)
@@ -87,9 +73,21 @@ The class implements priority (Data-Driven):
         return os.path.join(logs_dir, file_name)
     
     @staticmethod
+    def get_base_dir():
+        return ConfigReader.get_value("Paths.BasetDir", "reports") 
+    
+    @staticmethod
     def get_browser():
         return ConfigReader.get_value("BrowserSettings.DefaultBrowser", "chrom")  
     
     @staticmethod
     def get_headless():
         return ConfigReader.get_value("BrowserSettings.Headless", True)  
+    
+    @staticmethod
+    def get_ebay_username():
+        return os.getenv("EBAY_USERNAME", "")
+
+    @staticmethod
+    def get_ebay_password():
+        return os.getenv("EBAY_PASSWORD", "")

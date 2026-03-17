@@ -7,7 +7,7 @@ class LoggerManager:
     _main_logger = None
 
     @staticmethod
-    def setup_main_logger(root_run_path: str):
+    def setup_main_logger():
   
         if LoggerManager._main_logger:
             return LoggerManager._main_logger
@@ -32,7 +32,7 @@ class LoggerManager:
 
         # File run.log
         if ConfigReader.get_value("Logging.FileOutput", True):
-            log_dir = os.path.join(root_run_path, "Logs") 
+            log_dir = os.path.join(ConfigReader.get_base_dir(), "Logs") 
             os.makedirs(log_dir, exist_ok=True)
             
             file_handler = logging.FileHandler(
@@ -47,11 +47,11 @@ class LoggerManager:
         return logger
 
     @staticmethod
-    def get_test_logger(root_run_path: str, test_name: str):
+    def get_test_logger(test_name: str):
         logger = logging.getLogger(f"app.{test_name}")
         logger.propagate = ConfigReader.get_value("Logging.Propagate", True)  
         
-        log_dir = os.path.join(root_run_path, "Logs", "Tests")  
+        log_dir = os.path.join( ConfigReader.get_base_dir(), "Logs", "Tests")  
         os.makedirs(log_dir, exist_ok=True)
         
         log_path = os.path.join(log_dir, f"{test_name}.log")
