@@ -80,16 +80,16 @@ class AllureManager:
             
             AllureManager._kill_process_on_port(port)
 
-            win_path = subprocess.run(
-                ["wslpath", "-w", report_path],
-                capture_output=True, text=True
-            ).stdout.strip()
+            # win_path = subprocess.run(
+            #     ["wslpath", "-w", report_path],
+            #     capture_output=True, text=True
+            # ).stdout.strip()
 
-            logger.info(f"Windows report path: {win_path}")
+            logger.info(f"Report path: {report_path}")
 
             subprocess.Popen(
                 ["powershell.exe", "-NoProfile", "-Command",
-                 f'& "{allure_bat}" open -p {port} "{win_path}"'],
+                 f'& "{allure_bat}" open -p {port} "{report_path}"'],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL
             )

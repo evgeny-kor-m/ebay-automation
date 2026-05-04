@@ -77,7 +77,7 @@ def page(request):
     # Create browser page
     driver_page, playwright = DriverFactory.create_driver(browser_name, headless)
     
-    # ✅ ATTACH LOGGER TO PAGE
+    # ATTACH LOGGER TO PAGE
     driver_page.logger = test_logger
     
     yield driver_page
@@ -121,20 +121,24 @@ def pytest_runtest_makereport(item, call):
 def prepare_reports():
     global run_logger
 
-    base_dir = ConfigReader.get_base_dir()
+    base_dir = os.path.join(os.getcwd(), ConfigReader.get_base_dir())
     results_dir = os.path.join(base_dir, "allure-results")
-    report_dir = os.path.join(base_dir, "allure-report")
+    report_dir = os.path.join(base_dir, "allure-reports")
+
+    if not os.path.exists(results_dir) :# or not glob.glob(os.path.join(results_path, "*.json")):
+        run_logger.warning(f"⚠️ Results not found: {results_dir}")
+
 
     AllureManager.generate_report(results_dir, report_dir)
 
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     run_folder_name = f"RUN_{timestamp}"
-    root_run_path = os.path.join(os.getcwd(), base_dir, run_folder_name)
+    root_run_path = os.path.join(base_dir, run_folder_name)
 
     file.move_folder_contents(base_dir, root_run_path)
     run_logger.info(f"Testing structure created: {root_run_path}")
 
-    archived_report_dir = os.path.join(root_run_path, "allure-report")
+    archived_report_dir = os.path.join(root_run_path, "allure-reports")
 
     if ConfigReader.get_value("Allure.AutoOpen", True):
         AllureManager.open_report(archived_report_dir) 
