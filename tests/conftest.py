@@ -8,6 +8,9 @@ from utils.helper import file
 from utils.logger_setup import LoggerManager
 from utils.allure_manager import AllureManager
 
+# Global flag - True only when tests are actually executed
+_tests_were_executed = False
+
 run_logger = None
 
 
@@ -51,7 +54,6 @@ def pytest_unconfigure(config):
     """Hook is executed after all tests finish"""
     global run_logger
 
-    prepare_reports()
     try:
         run_logger.info("="*50)
         run_logger.info("PYTEST: All test execution finished")
@@ -125,10 +127,6 @@ def prepare_reports():
     results_dir = os.path.join(base_dir, "allure-results")
     report_dir = os.path.join(base_dir, "allure-reports")
 
-    if not os.path.exists(results_dir) :# or not glob.glob(os.path.join(results_path, "*.json")):
-        run_logger.warning(f"⚠️ Results not found: {results_dir}")
-
-
     AllureManager.generate_report(results_dir, report_dir)
 
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -158,7 +156,18 @@ def pytest_collection_modifyitems(items):
 
 def pytest_sessionfinish(session, exitstatus):
     print("\n[HOOK] Session finish: Preparing reports and archiving...")
-    # prepare_reports()
+    
+    # Only prepare reports if tests were actually executed, not just collected
+    if _tests_were_executed:
+        prepare_reports()
+
+def pytest_runtest_logreport(report):
+    print("\n[HOOK] Called after each phase (setup/call/teardown) of every test")
+    """Set flag when tests are actually executed (not just collected)"""
+    global _tests_were_executed
+    if report.when == "call":
+        _tests_were_executed = True
+        print(f"\n[HOOK] Called after each phase (setup/call/teardown) of every test, now : {report.nodeid} - {report.outcome}")
     
 
 

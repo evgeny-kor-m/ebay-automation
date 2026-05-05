@@ -1,14 +1,28 @@
+//
+// settings.json — project settings (which Python, where tests are, how to search)
+//
+
 {
-    // "python.defaultInterpreterPath": "E:\\Git_Projects\\ebay-automation\\ebay-automation\\venv\\Scripts\\python.exe",
+    // Path to Python interpreter (venv) for this project
     "python.defaultInterpreterPath": "/home/appuser/projects/ebay-automation/venv/bin/python",
 
+    // Enable pytest as test framework
     "python.testing.pytestEnabled": true,
+    
+    // Disable unittest (using pytest instead)
     "python.testing.unittestEnabled": false,
+    
+    // Tell pytest to look for tests in "tests" folder
     "python.testing.pytestArgs": [
         "tests"
     ],
+    
+    // Run tests from project root
     "python.testing.cwd": "${workspaceFolder}",
+    
+    // Auto-discover new tests when file is saved
     "python.testing.autoTestDiscoverOnSaveEnabled": true,
     
+    // Auto-activate venv when opening terminal
     "python.terminal.activateEnvironment": true
 }

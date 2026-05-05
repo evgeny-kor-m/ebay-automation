@@ -1,27 +1,40 @@
+// 
+// launch.json — how to launch and debug (arguments, environment variables)
+//
 {
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Debug Tests",
+            // Name shown in the Run & Debug dropdown
+            "name": "Python: Run Tests",
+            
+            // Use debugpy - Python debugger extension
             "type": "debugpy",
+            
+            // Launch a new process (not attach to existing)
             "request": "launch",
+            
+            // Makes this config available in Testing panel for debug button
             "purpose": ["debug-test"],
-            "console": "integratedTerminal",
-            "justMyCode": false,
-            "cwd": "${workspaceFolder}",
-            "env": {
-                "PYTHONPATH": "${workspaceFolder}"
-            }
-        },
-        {
-            "name": "Python: Run Tests with Allure",
-            "type": "debugpy",
-            "request": "launch",
+            
+            // Run as: python -m pytest
             "module": "pytest",
-            "args": ["--alluredir=reports/allure-results"],
+            
+            // Arguments passed to pytest:
+            // ${file} - currently open test file
+            // --alluredir - save allure results to this folder
+            "args": ["${file}", "--alluredir=reports/allure-results"],
+            
+            // Show output in VS Code terminal
             "console": "integratedTerminal",
+            
+            // Step into library code (not just your code)
             "justMyCode": false,
+            
+            // Run pytest from project root
             "cwd": "${workspaceFolder}",
+            
+            // Set PYTHONPATH so imports work correctly
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             }
