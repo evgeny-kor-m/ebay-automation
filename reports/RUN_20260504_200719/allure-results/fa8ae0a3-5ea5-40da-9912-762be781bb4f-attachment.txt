@@ -1,0 +1,9 @@
+[32mINFO    [0m app:conftest.py:74 --- RUN TEST: test_search_items_under_price ---
+[32mINFO    [0m app.test_search_items_under_price:conftest.py:75 Init browser: chrome (Headless: True)
+[32mINFO    [0m app.test_search_items_under_price:test_search_cart.py:10 ============================================================
+[32mINFO    [0m app.test_search_items_under_price:test_search_cart.py:11 TEST: Search items under price
+[32mINFO    [0m app.test_search_items_under_price:test_search_cart.py:12 ============================================================
+[32mINFO    [0m app.test_search_items_under_price:login_page.py:16 🔐 Logging in as: evgeny.korchev@gmail.com
+[32mINFO    [0m app.test_search_items_under_price:base_page.py:15 Navigating to: https://signin.ebay.com/signin/
+[35mDEBUG   [0m app.test_search_items_under_price:base_page.py:17 Page loaded: https://signin.ebay.com/signin/
+[32mINFO    [0m app:conftest.py:85 --- END TEST: test_search_items_under_price ---

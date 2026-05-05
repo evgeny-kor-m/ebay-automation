@@ -12,6 +12,19 @@
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             }
+        },
+        {
+            "name": "Python: Run Tests with Allure",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["--alluredir=reports/allure-results"],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
         }
     ]
 }

@@ -1,0 +1,11 @@
+ [HOOK] Test setup: test_search_items_under_price
+2026-05-04 20:07:09 - INFO - [conftest.py:74] - --- RUN TEST: test_search_items_under_price ---
+2026-05-04 20:07:09 - INFO - [conftest.py:75] - Init browser: chrome (Headless: True)
+2026-05-04 20:07:14 - INFO - [test_search_cart.py:10] - ============================================================
+2026-05-04 20:07:14 - INFO - [test_search_cart.py:11] - TEST: Search items under price
+2026-05-04 20:07:14 - INFO - [test_search_cart.py:12] - ============================================================
+2026-05-04 20:07:14 - INFO - [login_page.py:16] - 🔐 Logging in as: evgeny.korchev@gmail.com
+2026-05-04 20:07:14 - INFO - [base_page.py:15] - Navigating to: https://signin.ebay.com/signin/
+2026-05-04 20:07:14 - DEBUG - [base_page.py:17] - Page loaded: https://signin.ebay.com/signin/
+ [HOOK] Test completion: test_search_items_under_price
+2026-05-04 20:07:14 - INFO - [conftest.py:85] - --- END TEST: test_search_items_under_price ---
