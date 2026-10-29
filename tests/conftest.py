@@ -1,4 +1,5 @@
 import datetime
+import inspect
 import pytest
 import allure
 import os
@@ -7,6 +8,9 @@ from utils.config_reader import ConfigReader
 from utils.helper import file
 from utils.logger_setup import LoggerManager
 from utils.allure_manager import AllureManager
+
+print(f"DEBUG: {inspect.getfile(AllureManager)}")
+print(f"DEBUG: {dir(AllureManager)}")
 
 # Global flag - True only when tests are actually executed
 _tests_were_executed = False
@@ -127,7 +131,7 @@ def prepare_reports():
     results_dir = os.path.join(base_dir, "allure-results")
     report_dir = os.path.join(base_dir, "allure-reports")
 
-    AllureManager.generate_report(results_dir, report_dir)
+    # AllureManager.generate_report(results_dir, report_dir)
 
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     run_folder_name = f"RUN_{timestamp}"

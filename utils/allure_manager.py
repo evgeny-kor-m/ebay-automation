@@ -1,104 +1,41 @@
 import os
-import socket
 import subprocess
 import logging
 import glob
-import time
 
 logger = logging.getLogger("app")
 
 class AllureManager:
+    
+    allure_bat = r"E:\Git_Projects\owasp-juiceshop-vs-project\allure-2.35.1\bin\allure.bat"
+    
     @staticmethod
-    def generate_report(results_path, report_path):
-        """Generate Allure report using Linux binary (WSL environment)."""
+    def open_report(results_path):
+        """Generate and open Allure report in one command."""
         if not os.path.exists(results_path) or not glob.glob(os.path.join(results_path, "*.json")):
             logger.warning(f"⚠️ Results not found: {results_path}")
-            return False
-
-        allure_bin = "/mnt/e/Git_Projects/owasp-juiceshop-vs-project/allure-2.35.1/bin/allure"
-        env = os.environ.copy()
-
-        logger.info(f"Generating report from {results_path}...")
-
-        try:
-            result = subprocess.run(
-                [allure_bin, "generate", results_path, "-o", report_path, "--clean"],
-                capture_output=True,
-                text=True,
-                env=env
-            )
-
-            if result.returncode == 0:
-                logger.info(f"✅ Report created: {report_path}")
-                return True
-            else:
-                logger.error(f"❌ Allure CLI error:\n{result.stderr}\n{result.stdout}")
-                return False
-        except Exception as e:
-            logger.error(f"❌ Critical error: {e}")
-            return False
-
-    @staticmethod
-    def _kill_process_on_port(port: str):
-        """Kill any process listening on the given port."""
-        try:
-            result = subprocess.run(
-                ["powershell.exe", "-NoProfile", "-Command",
-                f"$conn = netstat -ano | Select-String ':{port}'; "
-                f"if ($conn) {{ $pid = ($conn -split ' ' | Where-Object {{ $_ }})[-1]; "
-                f"Stop-Process -Id $pid -Force -ErrorAction SilentlyContinue }}"],
-                capture_output=True, text=True
-            )
-            logger.info(f"Killed process on port {port}")
-            time.sleep(2)
-        except Exception as e:
-            logger.warning(f"Could not kill process on port {port}: {e}")
-
-    @staticmethod
-    def open_report(report_path):
-        
-        allure_bat = r"E:\Git_Projects\owasp-juiceshop-vs-project\allure-2.35.1\bin\allure.bat"
-        port = "4545"
-        url = f"http://localhost:{port}"
-
-        if not os.path.exists(report_path):
-            logger.error(f"❌ Report path not found: {report_path}")
             return
 
-        try:
-            
-            AllureManager._kill_process_on_port(port)
+        win_path = subprocess.run(
+            ["wslpath", "-w", results_path],
+            capture_output=True, text=True
+        ).stdout.strip()
 
-            win_path = subprocess.run(
-                ["wslpath", "-w", report_path],
-                capture_output=True, text=True
-            ).stdout.strip()
-
-            logger.info(f"Windows report path: {win_path}")
-
-            subprocess.Popen(
-                ["powershell.exe", "-NoProfile", "-Command",
-                 f'& "{allure_bat}" open -p {port} "{win_path}"'],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL
-            )
-
-            logger.info(f"🚀 Allure server starting on port {port}...")
-            
-            for _ in range(20):  # ждём до 20 секунд
-                time.sleep(1)
-                logger.info(f"waiting to port {port}...")
-                try:
-                    with socket.create_connection(("localhost", int(port)), timeout=1):
-                        break
-                except OSError:
-                    continue
-
-            logger.info(f"🌐 Opening browser: {url}")
-            subprocess.run(
-                ["powershell.exe", "-NoProfile", "-Command", f"Start-Process '{url}'"]
-            )
-            logger.info(f"✅ Done. If not opened manually: {url}")
-
-        except Exception as e:
-            logger.error(f"❌ Failed to open report: {e}")
+        logger.info(f"🚀 Opening Allure report...")
+        subprocess.Popen(
+            ["powershell.exe", "-NoProfile", "-Command",
+             f'& "{AllureManager.allure_bat}" serve "{win_path}"'],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        # subprocess.Popen( # starts a process in the background, doesn't wait for completion
+        #     ["powershell.exe", # launches PowerShell
+        #     "-NoProfile", # without loading the PowerShell profile (faster)
+        #     "-Command", # next argument is the command
+        #     f'& "{AllureManager.allure_bat}" serve "{win_path}"']
+        #     # & is the call operator in PowerShell
+        #     # allure.bat serve is the command that generates + and opens
+        #     # win_path is the path to allure-results in Windows format
+        #     stdout=subprocess.DEVNULL, # hide the output
+        #     stderr=subprocess.DEVNULL # hide errors
+        # )
