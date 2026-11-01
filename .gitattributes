@@ -1,0 +1,5 @@
+# All text files are stored and checked out with LF; Git leaves binary files (such as .png, etc.) untouched
+* text=auto eol=lf
+
+# Windows scripts require CRLF
+*.bat text eol=crlf
