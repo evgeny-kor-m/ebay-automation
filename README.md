@@ -28,3 +28,34 @@ pytest --browser firefox
 ## To run
 python -m pytest tests/test_search_cart.py --alluredir=reports/allure-results
 ```
+```
+
+
+
+
+
+
+
+# EXECUTION
+
+1. Installation (in WSL)
+
+Must install it inside WSL, in the same location as your project:
+```
+curl -fsSL https://claude.ai/install.sh | bash
+# open a new terminal
+claude --version
+claude doctor                           # installation diagnostics
+```
+2. Playwright MCP
+
+Required for DOM exploration in Phase 3. It necessitates Node (npx):
+
+```
+node --version       # if not installed, set up Node LTS via nvm
+claude mcp add --scope project playwright -- npx @playwright/mcp@latest
+```
+
+Using the --scope project flag, the configuration is saved to a .mcp.json file in the repository root. 
+You should commit this file; it represents the visible component of your agentic workflow.
+

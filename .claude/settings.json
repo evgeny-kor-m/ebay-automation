@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "defaultMode": "plan",
+    "allow": ["Bash(pytest:*)", "Bash(git status)", "Bash(git diff:*)"],
+    "deny": ["Read(./.env)", "Bash(git push:*)", "Bash(rm -rf:*)"]
+  }
+}

@@ -1,6 +1,6 @@
 
 import logging
-from base.base_page import BasePage
+from core.base_page import BasePage
 from playwright.sync_api import Page
 
 
