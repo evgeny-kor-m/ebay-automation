@@ -56,7 +56,7 @@ class ConfigReader:
     def get_full_path(path_key):
 
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        base_dir = ConfigReader.get_value("Paths.BasetDir", "reports")
+        base_dir = ConfigReader.get_value("Paths.BaseDir", "reports")
         sub_dir = ConfigReader.get_value(f"Paths.{path_key}", path_key.lower())
         
         full_path = os.path.join(project_root, base_dir, sub_dir)
@@ -74,11 +74,11 @@ class ConfigReader:
     
     @staticmethod
     def get_base_dir():
-        return ConfigReader.get_value("Paths.BasetDir", "reports") 
+        return ConfigReader.get_value("Paths.BaseDir", "reports") 
     
     @staticmethod
     def get_browser():
-        return ConfigReader.get_value("BrowserSettings.DefaultBrowser", "chrom")  
+        return ConfigReader.get_value("BrowserSettings.DefaultBrowser", "chrome")  
     
     @staticmethod
     def get_headless():

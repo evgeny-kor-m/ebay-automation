@@ -1,42 +1,32 @@
-import datetime
-import inspect
 import pytest
 import allure
 import os
 from driver.driver_factory import DriverFactory
 from utils.config_reader import ConfigReader
-from utils.helper import file
 from utils.logger_setup import LoggerManager
-from utils.allure_manager import AllureManager
-
-print(f"DEBUG: {inspect.getfile(AllureManager)}")
-print(f"DEBUG: {dir(AllureManager)}")
-
-# Global flag - True only when tests are actually executed
-_tests_were_executed = False
 
 run_logger = None
 
 
 def init_test_folders():
     # paths = ConfigReader.get_value("Paths", {})
-    # base_dir = paths.get("BasetDir")
+    # base_dir = paths.get("BaseDir")
    
     # timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     # run_folder_name = f"RUN_{timestamp}"
     # root_run_path = os.path.join(os.getcwd(), base_dir, run_folder_name)
 
     # for key, value in paths.items():
-    #     if key in ["BasetDir", "LogFileName"]:
+    #     if key in ["BaseDir", "LogFileName"]:
     #         continue
     #     folder_path = os.path.join(root_run_path, value)
     #     os.makedirs(folder_path, exist_ok=True)
     
     paths = ConfigReader.get_value("Paths", {})
-    base_dir = paths.get("BasetDir")
+    base_dir = paths.get("BaseDir")
 
     for key, value in paths.items():
-        if key in ["BasetDir", "LogFileName"]:
+        if key in ["BaseDir", "LogFileName"]:
             continue
         folder_path = os.path.join(base_dir, value)
         os.makedirs(folder_path, exist_ok=True)
@@ -123,57 +113,3 @@ def pytest_runtest_makereport(item, call):
                 attachment_type=allure.attachment_type.PNG
             )
             run_logger.error(f"Test Failure: {item.name}. Screenshot: {screenshot_path}")
-
-def prepare_reports():
-    global run_logger
-
-    base_dir = os.path.join(os.getcwd(), ConfigReader.get_base_dir())
-    results_dir = os.path.join(base_dir, "allure-results")
-    report_dir = os.path.join(base_dir, "allure-reports")
-
-    # AllureManager.generate_report(results_dir, report_dir)
-
-    timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-    run_folder_name = f"RUN_{timestamp}"
-    root_run_path = os.path.join(base_dir, run_folder_name)
-
-    file.move_folder_contents(base_dir, root_run_path)
-    run_logger.info(f"Testing structure created: {root_run_path}")
-
-    archived_report_dir = os.path.join(root_run_path, "allure-reports")
-
-    if ConfigReader.get_value("Allure.AutoOpen", True):
-        AllureManager.open_report(archived_report_dir) 
-
-
-def pytest_runtest_setup(item):
-    """Hook: before each test setup"""
-    print(f" [HOOK] Test setup: {item.name}")
-
-def pytest_runtest_teardown(item):
-    """Hook: after each test teardown"""
-    print(f" [HOOK] Test completion: {item.name}")
-
-def pytest_collection_modifyitems(items):
-    """Hook: after collecting all tests"""
-    print(f"\n[HOOK] Tests collected: {len(items)}")
-
-def pytest_sessionfinish(session, exitstatus):
-    print("\n[HOOK] Session finish: Preparing reports and archiving...")
-    
-    # Only prepare reports if tests were actually executed, not just collected
-    if _tests_were_executed:
-        prepare_reports()
-
-def pytest_runtest_logreport(report):
-    print("\n[HOOK] Called after each phase (setup/call/teardown) of every test")
-    """Set flag when tests are actually executed (not just collected)"""
-    global _tests_were_executed
-    if report.when == "call":
-        _tests_were_executed = True
-        print(f"\n[HOOK] Called after each phase (setup/call/teardown) of every test, now : {report.nodeid} - {report.outcome}")
-    
-
-
-
-
