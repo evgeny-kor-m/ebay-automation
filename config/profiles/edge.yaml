@@ -1,0 +1,6 @@
+# config/profiles/edge.yaml
+engine: chromium
+channel: msedge       # the actual Edge browser, not bare-bones Chromium
+headless: true
+viewport: {width: 1920, height: 1080}
+remote: null          # or the address of a Selenium Grid

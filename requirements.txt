@@ -1,15 +1,15 @@
-pytest>=7.4.0                        # Freimvork for testing
-pytest-playwright>=0.4.0             # Playwright integration for Pytest
-playwright>=1.40.0                   # Playwright browser automation library
+pytest==9.0.3                        # Freimvork for testing
+### removed ### pytest-playwright>=0.4.0             # Playwright integration for Pytest
+playwright==1.59.0                   # Playwright browser automation library
 
 # Allure Reports
-allure-pytest>=2.13.2                # Plugin for Pytest integration with Allure Framework
-allure-python-commons>=2.13.2
+allure-pytest==2.16.0                # Plugin for Pytest integration with Allure Framework
+allure-python-commons==2.16.0
 
 # Html reports
-pytest-html>=4.0.0                   # Plugin for generating Pytest HTML reports
+pytest-html==4.2.0                   # Plugin for generating Pytest HTML reports
 
-PyYAML>=6.0.1                        # Required for parsing YAML test data files
-python-dotenv>=1.0.0                 # Required for managing environment variables/secrets
-pytest-xdist>=3.3.0                  # Parallel test execution
-pytest-cov>=4.1.0  # Code covering (Optional)
+PyYAML==6.0.3                        # Required for parsing YAML test data files
+python-dotenv==1.2.2                 # Required for managing environment variables/secrets
+pytest-xdist==3.8.0                  # Parallel test execution
+pytest-cov==7.1.0  # Code covering (Optional)

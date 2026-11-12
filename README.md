@@ -10,6 +10,21 @@ playwright install-deps
 # psycopg2
 ```
 
+Java and Allure CLI
+```
+sudo apt update && sudo apt install -y default-jre make
+java -version
+
+ALLURE_VERSION=2.45.0
+mkdir -p ~/tools && cd ~/tools
+curl -fsSL -o allure.tgz \
+https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz
+tar -xzf allure.tgz && rm allure.tgz
+echo "export PATH=\"\$HOME/tools/allure-${ALLURE_VERSION}/bin:\$PATH\"" >> ~/.bashrc
+source ~/.bashrc
+allure --version
+```
+
 ## To Learn
 ```
 Параллельный запуск (Требование №1):
