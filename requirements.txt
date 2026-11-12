@@ -1,5 +1,4 @@
 pytest==9.0.3                        # Freimvork for testing
-### removed ### pytest-playwright>=0.4.0             # Playwright integration for Pytest
 playwright==1.59.0                   # Playwright browser automation library
 
 # Allure Reports

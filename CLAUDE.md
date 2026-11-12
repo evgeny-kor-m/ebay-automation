@@ -22,7 +22,7 @@ Layer structure and dependency flow (circular imports are prohibited):
 ## Rules
 - Every UI component must be defined as an `Element(name, locators)`, requiring at least 2 locators based on *different* attributes (e.g., `data-*` attributes, CSS selectors, or XPath based on text content). Hardcoded string selectors outside of `Element` definitions are prohibited.
 - Fallback mechanisms (iterating through multiple locators) and retry logic (handling environmental instability) are distinct processes. `ElementNotFoundError` should not trigger a retry.
-- Monetary values ​​must be handled exclusively using `Decimal`; never use `float`.
+- Monetary values must be handled exclusively using `Decimal`; never use `float`.
 - Wait conditions must be based on the state of the element. - `time.sleep` and `wait_for_timeout` are prohibited.
 - No `except Exception: pass` blocks.
 - Configuration, URLs, and timeouts must come from `config/`; do not hardcode them.
