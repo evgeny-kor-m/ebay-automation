@@ -37,6 +37,12 @@ def test_list_instead_of_tuple_rejected():
         Element("x", list(VALID))
 
 
+@pytest.mark.parametrize("locators", [None, 5], ids=["none", "int"])
+def test_non_iterable_locators_rejected_with_clear_message(locators):
+    with pytest.raises(TypeError, match="'x': locators must be a tuple"):
+        Element("x", locators)
+
+
 def test_string_instead_of_tuple_rejected():
     # A common typo: ("#a") is a str, not a 1-tuple.
     with pytest.raises(TypeError, match="must be a tuple"):
@@ -60,33 +66,16 @@ def test_duplicate_locators_rejected():
         Element("x", ("#a", "#a"))
 
 
-# Known bugs in core/element.py: strict xfail documents them and turns into
-# a failure (XPASS) once core is fixed, prompting removal of the marker.
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="core bug: duplicates are compared without strip(), '#a ' passes as a fallback",
-)
 def test_duplicate_locators_differing_only_by_whitespace_rejected():
     with pytest.raises(ValueError, match="duplicate locators"):
         Element("x", ("#a", "#a "))
 
 
-@pytest.mark.xfail(
-    strict=True,
-    raises=AttributeError,
-    reason="core bug: non-str name hits .strip() -> AttributeError instead of TypeError",
-)
 def test_non_string_name_rejected_with_type_error():
     with pytest.raises(TypeError, match="name"):
         Element(None, VALID)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    raises=AttributeError,
-    reason="core bug: non-str locator hits .strip() -> AttributeError instead of TypeError",
-)
 def test_non_string_locator_rejected_with_type_error_naming_element():
     with pytest.raises(TypeError, match="'search button'"):
         Element("search button", ("#a", None))

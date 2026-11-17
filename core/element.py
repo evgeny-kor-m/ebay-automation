@@ -15,18 +15,21 @@ class Element:
     locators: tuple[str, ...]
 
     def __post_init__(self) -> None:
-        if not self.name.strip():
-            raise ValueError("Element name is required (used in logs).")
-        
+
         if not isinstance(self.locators, tuple):
             raise TypeError(
                 f"Element '{self.name}': locators must be a tuple, "
                 f"got {type(self.locators).__name__}."
             )
         
-        if not all(isinstance(loc, str) for loc in self.locators) or isinstance(self.name, str):
-            raise TypeError(f"Element '{self.name}': and every locator must be a string.")
+        if not all(isinstance(loc, str) for loc in self.locators) or not isinstance(self.name, str):
+            raise TypeError(f"Element name: '{self.name}', and every locator must be a string.")
+        
+        if not self.name.strip():
+            raise ValueError("Element name is required (used in logs).")
+        
 
+        
         if len(self.locators) < 2:
             raise ValueError(
                 f"Element '{self.name}' needs at least 2 locators for fallback, "
