@@ -13,6 +13,7 @@ VALID = ("[data-testid='x']", "//button[text()='Go']")
 
 # --- valid Element ---------------------------------------------------------
 
+
 def test_valid_element_keeps_fields():
     el = Element("search button", VALID)
     assert el.name == "search button"
@@ -25,6 +26,7 @@ def test_valid_element_accepts_more_than_two_locators():
 
 
 # --- validation errors ---------------------------------------------------
+
 
 @pytest.mark.parametrize("name", ["", "   "], ids=["empty", "whitespace"])
 def test_empty_name_rejected(name):
@@ -72,7 +74,7 @@ def test_duplicate_locators_differing_only_by_whitespace_rejected():
 
 
 def test_non_string_name_rejected_with_type_error():
-    with pytest.raises(TypeError, match="name"):
+    with pytest.raises(TypeError, match="Element name must be a string"):
         Element(None, VALID)
 
 
@@ -83,9 +85,8 @@ def test_non_string_locator_rejected_with_type_error_naming_element():
 
 # --- immutability ----------------------------------------------------------
 
-@pytest.mark.parametrize(
-    "attr, value", [("name", "other"), ("locators", ("#b", "#c"))]
-)
+
+@pytest.mark.parametrize("attr, value", [("name", "other"), ("locators", ("#b", "#c"))])
 def test_element_is_frozen(attr, value):
     el = Element("x", VALID)
     with pytest.raises(dataclasses.FrozenInstanceError):
@@ -93,6 +94,7 @@ def test_element_is_frozen(attr, value):
 
 
 # --- ElementNotFoundError --------------------------------------------------
+
 
 def test_element_not_found_stores_name_and_tried_as_tuple():
     err = ElementNotFoundError("search button", list(VALID))
