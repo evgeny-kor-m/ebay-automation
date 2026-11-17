@@ -11,4 +11,6 @@ pytest-html==4.2.0                   # Plugin for generating Pytest HTML reports
 PyYAML==6.0.3                        # Required for parsing YAML test data files
 python-dotenv==1.2.2                 # Required for managing environment variables/secrets
 pytest-xdist==3.8.0                  # Parallel test execution
-pytest-cov==7.1.0  # Code covering (Optional)
+pytest-cov==7.1.0                    # Code covering (Optional)
+
+ruff==0.17.5                         # linter is a static analysis tool that checks source code for errors and rule compliance without running it.

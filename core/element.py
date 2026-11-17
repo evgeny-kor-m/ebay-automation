@@ -1,4 +1,5 @@
 """Element: a UI element described as data — a name plus fallback locators."""
+
 from dataclasses import dataclass
 
 
@@ -29,4 +30,6 @@ class Element:
         if any(not loc.strip() for loc in self.locators):
             raise ValueError(f"Element '{self.name}' has an empty locator.")
         if len(set(self.locators)) != len(self.locators):
-            raise ValueError( f"Element '{self.name}' has duplicate locators: a duplicate is a fake fallback." )
+            raise ValueError(
+                f"Element '{self.name}' has duplicate locators: a duplicate is a fake fallback."
+            )

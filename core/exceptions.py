@@ -5,6 +5,7 @@ Separate types let the framework react differently to different failures:
   never ElementNotFoundError: if no locator matched, repeating won't help;
 - reports show a clear reason instead of a generic "Timeout 30000ms exceeded".
 """
+
 from collections.abc import Sequence
 
 

@@ -3,8 +3,8 @@ import allure
 from playwright.sync_api import Page, Locator
 from typing import Optional
 
+
 class BasePage:
- 
     def __init__(self, page: Page, logger: logging.Logger):
 
         self.page = page
@@ -15,12 +15,12 @@ class BasePage:
         self.logger.info(f"Navigating to: {url}")
         self.page.goto(url)
         self.logger.debug(f"Page loaded: {self.page.url}")
-    
+
     @allure.step("click_element")
     def click_element(self, selector: str, description: str = None):
         desc = description or selector
         self.logger.info(f"Clicking: {desc}")
-        
+
         try:
             self.page.click(selector)
             self.logger.debug(f"Clicked successfully: {desc}")
@@ -33,7 +33,7 @@ class BasePage:
     def fill_input(self, selector: str, text: str, description: str = None):
         desc = description or selector
         self.logger.info(f"Filling '{desc}' with: {text}")
-        
+
         try:
             self.page.fill(selector, text)
             self.logger.debug(f"Filled successfully: {desc}")
@@ -45,7 +45,7 @@ class BasePage:
     def get_text(self, selector: str, description: str = None) -> str:
         desc = description or selector
         self.logger.debug(f"Reading text from: {desc}")
-        
+
         try:
             text = self.page.locator(selector).text_content()
             self.logger.debug(f"Text retrieved: '{text}'")
@@ -53,18 +53,21 @@ class BasePage:
         except Exception as e:
             self.logger.error(f"Failed to get text from: {desc}")
             raise
-    @allure.step("wait_for_element")   
-    def wait_for_element(self, selector: str, timeout: int = 30000, description: str = None):
+
+    @allure.step("wait_for_element")
+    def wait_for_element(
+        self, selector: str, timeout: int = 30000, description: str = None
+    ):
         desc = description or selector
         self.logger.debug(f"Waiting for element: {desc} (timeout: {timeout}ms)")
-        
+
         try:
             self.page.wait_for_selector(selector, timeout=timeout)
             self.logger.debug(f"Element appeared: {desc}")
         except Exception as e:
             self.logger.error(f"Element did not appear: {desc}")
             raise
-    
+
     def take_screenshot(self, name: str):
         self.logger.info(f"Taking screenshot: {name}")
         screenshot_path = f"screenshots/{name}.png"

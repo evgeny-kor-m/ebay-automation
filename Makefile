@@ -23,3 +23,6 @@ report:            ## Report for a single profile from the last run
 
 report-all:        ## All profiles from the last run in a single report
 	allure serve $(RUN)/*/allure-results
+
+lint: ## Check the code
+	ruff check .
