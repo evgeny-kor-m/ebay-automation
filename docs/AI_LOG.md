@@ -9,3 +9,9 @@ Conclusion: Always verify the agent’s claims regarding the state of the reposi
 The agent itself detected a side effect (CRLF→LF conversions bloated the diff) and rolled it back.
 Removed a dead hook—beyond the scope of the prompt—with an explicit explanation.
 Lesson: the repo contains mixed line endings → added `.gitattributes`.
+
+## 2026-11-17 — Exception pickling
+The agent identified an issue: exceptions with a custom `__init__` method cannot be reconstructed via `pickle` (which is correct),
+and it claimed this poses a risk to `xdist` (an overstatement). Upon further investigation, I checked the `xdist`/`execnet` source code
+and ran a test: `xdist` transmits reports as strings and does not use `pickle`.
+Conclusion: Always verify findings with facts; the agent may exaggerate the potential consequences.
