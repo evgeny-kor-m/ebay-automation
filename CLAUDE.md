@@ -34,6 +34,7 @@ Layer structure and dependency flow (circular imports are prohibited):
 
 ## Rules
 - Every UI element is an `Element(name, locators)` with at least 2 locators based on *different* attributes (`data-*`, CSS, XPath by text). String selectors outside `Element` are prohibited.
+- XPath locators start with `//` (inside a Locator this already searches relative to it). Never `.//` without the `xpath=` prefix: Playwright parses it as CSS, the locator is broken and fallback silently hides it.
 - Fallback (iterating locators) and retry (environment instability) are separate mechanisms. `ElementNotFoundError` must not trigger a retry.
 - Money is handled only as `Decimal`, never `float`.
 - Waits are based on element state; `time.sleep` and `wait_for_timeout` are prohibited.

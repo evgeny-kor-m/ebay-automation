@@ -15,3 +15,6 @@ The agent identified an issue: exceptions with a custom `__init__` method cannot
 and it claimed this poses a risk to `xdist` (an overstatement). Upon further investigation, I checked the `xdist`/`execnet` source code
 and ran a test: `xdist` transmits reports as strings and does not use `pickle`.
 Conclusion: Always verify findings with facts; the agent may exaggerate the potential consequences.
+
+### 2026-11-18 — SmartLocator real-browser tests
+Fixed a test bug where Playwright treated .//span as CSS instead of XPath (only // and .. are recognized as XPath, and // inside a Locator is already relative). Added test 6b specifically for fallback XPath. Verified and added rule to CLAUDE.md
