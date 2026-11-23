@@ -5,18 +5,17 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-class ConfigReader:
 
+class ConfigReader:
     _config = None
 
     @staticmethod
     def _get_config():
         if ConfigReader._config is None:
-            
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            config_path = os.path.join(project_root, 'config', 'appsettings.json')
+            config_path = os.path.join(project_root, "config", "appsettings.json")
             try:
-                with open(config_path, 'r', encoding='utf-8') as f:
+                with open(config_path, "r", encoding="utf-8") as f:
                     ConfigReader._config = json.load(f)
             except FileNotFoundError:
                 print(f" Config file doesn't found in path: {config_path}")
@@ -26,31 +25,33 @@ class ConfigReader:
     @staticmethod
     def get_value(key_path, default=None):
 
-        env_key = key_path.replace('.', '_').upper()
+        env_key = key_path.replace(".", "_").upper()
         env_value = os.getenv(env_key)
-        
+
         if env_value is not None:
             # Adopt (bool, int)
-            if env_value.lower() in ('true', '1'): return True
-            if env_value.lower() in ('false', '0'): return False
+            if env_value.lower() in ("true", "1"):
+                return True
+            if env_value.lower() in ("false", "0"):
+                return False
             try:
-                if '.' in env_value: return float(env_value)
+                if "." in env_value:
+                    return float(env_value)
                 return int(env_value)
             except ValueError:
                 return env_value
 
-        keys = key_path.split('.')
+        keys = key_path.split(".")
         data = ConfigReader._get_config()
-        
+
         for key in keys:
             if isinstance(data, dict):
                 data = data.get(key)
             else:
                 data = None
                 break
-        
+
         return data if data is not None else default
-    
 
     @staticmethod
     def get_full_path(path_key):
@@ -58,12 +59,12 @@ class ConfigReader:
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         base_dir = ConfigReader.get_value("Paths.BaseDir", "reports")
         sub_dir = ConfigReader.get_value(f"Paths.{path_key}", path_key.lower())
-        
+
         full_path = os.path.join(project_root, base_dir, sub_dir)
-        
+
         if not os.path.exists(full_path):
             os.makedirs(full_path, exist_ok=True)
-            
+
         return full_path
 
     @staticmethod
@@ -71,19 +72,19 @@ class ConfigReader:
         logs_dir = ConfigReader.get_full_path("Logs")
         file_name = ConfigReader.get_value("Paths.LogFileName", "automation.log")
         return os.path.join(logs_dir, file_name)
-    
+
     @staticmethod
     def get_base_dir():
-        return ConfigReader.get_value("Paths.BaseDir", "reports") 
-    
+        return ConfigReader.get_value("Paths.BaseDir", "reports")
+
     @staticmethod
     def get_browser():
-        return ConfigReader.get_value("BrowserSettings.DefaultBrowser", "chrome")  
-    
+        return ConfigReader.get_value("BrowserSettings.DefaultBrowser", "chrome")
+
     @staticmethod
     def get_headless():
-        return ConfigReader.get_value("BrowserSettings.Headless", True)  
-    
+        return ConfigReader.get_value("BrowserSettings.Headless", True)
+
     @staticmethod
     def get_ebay_username():
         return os.getenv("EBAY_USERNAME", "")

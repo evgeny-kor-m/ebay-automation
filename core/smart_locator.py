@@ -11,10 +11,12 @@ class SmartLocator:
     def __init__(self, timeout_ms: int, logger: logging.Logger) -> None:
         if timeout_ms <= 0:
             raise ValueError(f"timeout_ms must be positive, got {timeout_ms}.")
-        self.timeout_ms = timeout_ms      # Timeout for 1 Locator
+        self.timeout_ms = timeout_ms  # Timeout for 1 Locator
         self.logger = logger
 
-    def find_element(self, root: Page | Locator, element: Element, state: str = "visible") -> Locator:
+    def find_element(
+        self, root: Page | Locator, element: Element, state: str = "visible"
+    ) -> Locator:
         """Return the first locator of `element` that reaches `state`.
 
         Tries locators in order, one attempt each (attempts = number of locators).
@@ -27,11 +29,15 @@ class SmartLocator:
             try:
                 candidate.wait_for(state=state, timeout=self.timeout_ms)
             except PlaywrightTimeoutError:
-                self.logger.info(f"[{element.name}] not found via #{attempt}/{total}: {loc}")
-                continue 
-            except PlaywrightError as e:       
+                self.logger.info(
+                    f"[{element.name}] not found via #{attempt}/{total}: {loc}"
+                )
+                continue
+            except PlaywrightError as e:
                 reason = str(e).splitlines()[0]
-                self.logger.error(f"[{element.name}] broken selector #{attempt}/{total}: {loc} — {reason}")
+                self.logger.error(
+                    f"[{element.name}] broken selector #{attempt}/{total}: {loc} — {reason}"
+                )
                 continue
 
             if attempt == 1:
