@@ -5,8 +5,10 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Element:
-    """Immutable description of a UI element. @dataclass(frozen=True) + tuple[str, ...] 
-    avoid changing fields after creation, so it is safe to share one instance between all tests
+    """Immutable description of a UI element.
+
+    frozen=True + tuple[str, ...]: fields cannot be changed after creation,
+    so one instance is safe to share between all tests.
 
     Holds no logic for finding: SmartLocator does that (SRP).
     Validated on creation, so a page with an invalid Element fails on import.

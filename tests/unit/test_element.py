@@ -26,15 +26,9 @@ def test_valid_element_accepts_more_than_two_locators():
 
 # --- validation errors ---------------------------------------------------
 
-# Run	 parameter  value	 signature
-# 1: 	 name       ""	     empty
-# 2: 	 name       "   "	 whitespace
-# --results----------------------------------------
-# tests/unit/test_element.py::test_empty_name_rejected[empty name] PASSED  [ 50%]
-# tests/unit/test_element.py::test_empty_name_rejected[whit spaces] PASSED [100%]
-
-
-@pytest.mark.parametrize("name", ["", "   "], ids=["empty name", "whit spaces"])
+@pytest.mark.parametrize("name",     # parameter
+                         ["", "   "],  # value
+                         ids=["empty name", "whit spaces"]) # signature
 def test_empty_name_rejected(name):
     with pytest.raises(ValueError, match="name is required"):
         Element(name, VALID_LOCATORS)

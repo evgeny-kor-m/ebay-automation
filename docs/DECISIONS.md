@@ -28,5 +28,5 @@ Test execution only generates allure-results, reports are viewed separately via 
 ### D9. Screenshot upon failure. 
 SmartLocator does not take a screenshot; instead, it raises an `ElementNotFoundError` (containing the name and all attempted locators). Screenshots and traces are collected by a test-failure hook in `conftest.py` — one screenshot per failure, with no duplicates. If the flow itself catches the error and continues (for example, by skipping an item), the flow takes the screenshot.
 
-### D-01 Code 
+### D10 Code element.py
 Extract UI elements into immutable `@dataclasses` with validation in `__post_init__`. This ensures thread safety during parallel execution and adheres to the "fail-fast" principle: if an element is created without a fallback locator or contains a duplicate, the framework will fail immediately upon initialization—before wasting time launching the browser.
