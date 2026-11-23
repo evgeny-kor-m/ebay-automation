@@ -23,10 +23,7 @@ Playwright is tied to its own browser builds; you cannot select a specific versi
 Test execution only generates allure-results, reports are viewed separately via make report (Allure CLI in WSL, accessible through Windows browser at localhost). Removed AllureManager with hardcoded Windows paths and PowerShell dependencies. The same command now works locally and in CI.
 
 ### D8 Code. Broken Selector
-(e.g., an XPath expression with an unclosed bracket) — 
-[x] The argument for "moving on to the next locator" is robustness: other locators might still work. 
-[ ] The argument for "failing immediately" is that this is a bug in the code, and it should be identified right away. 
-[ ] A compromise: proceed to the next locator, but log the issue as an ERROR.
+(e.g., an XPath expression with an unclosed bracket) —  proceed to the next locator, but log the issue as an ERROR.
 
 ### D9. Screenshot upon failure. 
 SmartLocator does not take a screenshot; instead, it raises an `ElementNotFoundError` (containing the name and all attempted locators). Screenshots and traces are collected by a test-failure hook in `conftest.py` — one screenshot per failure, with no duplicates. If the flow itself catches the error and continues (for example, by skipping an item), the flow takes the screenshot.

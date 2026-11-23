@@ -1,13 +1,15 @@
 import logging
 
-from playwright.sync_api import Locator, Page, TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import Error as PlaywrightError
+from playwright.sync_api import Locator, Page
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
 from core.element import Element
 from core.exceptions import ElementNotFoundError
 
 
 class SmartLocator:
+    """Finds an Element by trying its locators in order (fallback)."""
     def __init__(self, timeout_ms: int, logger: logging.Logger) -> None:
         if timeout_ms <= 0:
             raise ValueError(f"timeout_ms must be positive, got {timeout_ms}.")

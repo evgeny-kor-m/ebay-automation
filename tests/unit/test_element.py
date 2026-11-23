@@ -1,10 +1,10 @@
-"""Unit tests for core.element.Element and core.exceptions. No browser, no network."""
+"""Unit tests for core.element.Element. No browser, no network."""
 
 import dataclasses
+
 import pytest
 
 from core.element import Element
-
 
 VALID_LOCATORS = ("[data-testid='x']", "//button[text()='Go']")
 
