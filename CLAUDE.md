@@ -16,6 +16,7 @@ reports via `make report`.
 
 ## Commands
 - Unit tests: `pytest tests/unit -q` (or `make unit`)
+- Integration tests (real headless Chromium, no network): `pytest tests/integration -q` (or `make integration`)
 - E2E tests: `pytest tests/e2e --profile chrome` (planned, `--profile` not implemented yet)
 - Parallel execution: `pytest tests/e2e -n 4 --profile chrome` (planned)
 - Import validation: `pytest --collect-only -q`
@@ -43,6 +44,7 @@ Layer structure and dependency flow (circular imports are prohibited):
 - Secrets only from `.env`; never in code, logs or reports.
 - Use `git mv` to move files (preserves history).
 - Preserve LF line endings; never rewrite whole files just to change a few lines.
+- Test file names must be unique across `tests/` (no `__init__.py` in test folders):  e.g. `test_smart_locator.py` in unit, `test_smart_locator_playwright.py` in integration.
 
 ## What to avoid
 - Do not weaken or remove assertions to make a test pass. If a test fails, find the cause and report it.

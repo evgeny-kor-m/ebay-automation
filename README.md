@@ -24,12 +24,7 @@ echo "export PATH=\"\$HOME/tools/allure-${ALLURE_VERSION}/bin:\$PATH\"" >> ~/.ba
 source ~/.bashrc
 allure --version
 ```
-A linter is a program that reads code without executing it, looking for errors and poor coding style:
-```
-pip install ruff
-ruff check .              # show issues
-ruff check . --fix        # fix issues that can be resolved automatically
-```
+
 
 ## To Learn
 ```
@@ -79,4 +74,19 @@ claude mcp add --scope project playwright -- npx @playwright/mcp@latest
 
 Using the --scope project flag, the configuration is saved to a .mcp.json file in the repository root. 
 You should commit this file; it represents the visible component of your agentic workflow.
+
+
+A linter is a program that reads code without executing it, looking for errors and poor coding style:
+```
+pip install ruff
+ruff check .              # show issues
+ruff check . --fix        # fix issues that can be resolved automatically
+```
+
+Claude commands
+```
+claude 
+/login
+/exit
+```
 

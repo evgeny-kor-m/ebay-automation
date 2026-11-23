@@ -4,10 +4,13 @@ RUN     ?= $(shell ls -1d reports/RUN_* 2>/dev/null | tail -1)
 
 RESULTS  = $(if $(RUN),$(RUN)/$(PROFILE)/allure-results,reports/allure-results)
 
-.PHONY: unit test test-parallel report report-all
+.PHONY: unit integration test test-parallel report report-all
 
 unit:
 	pytest tests/unit -q
+
+integration:       ## Real headless Chromium, no network
+	pytest tests/integration -q
 
 test:
 	pytest tests/e2e --profile $(PROFILE)
