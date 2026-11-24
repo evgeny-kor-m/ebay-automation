@@ -27,7 +27,7 @@ BROKEN_REASON = (
 class FakeLocator:
     """Stands in for a Playwright Locator; `.first` returns itself.
 
-    Implements only what SmartLocator.find_element calls:
+    Implements only what SmartLocator calls:
     `root.locator(selector).first.wait_for(state=..., timeout=...)`.
     No DOM and no browser: the outcome of `wait_for` is preconfigured.
     """
@@ -65,9 +65,9 @@ class FakeRoot:
     def __init__(self, errors: dict[str, Exception | None]) -> None:
         # One log for all locators, so the test can assert order and count of attempts.
         self.calls: list[tuple[str, str, int]] = []
-        self._locators = {
-            sel: FakeLocator(sel, self.calls, err) for sel, err in errors.items()
-        }
+        self._locators = {}                       
+        for sel, err in errors.items():           
+            self._locators[sel] = FakeLocator(sel, self.calls, err)  
 
     def locator(self, selector: str) -> FakeLocator:
         # An unknown selector raises KeyError: the test fails loudly, not silently.
@@ -77,6 +77,7 @@ class FakeRoot:
 @pytest.fixture
 def smart_locator(caplog) -> SmartLocator:
     """SmartLocator under test, with its own logger captured by caplog."""
+    # caplog — a built-in pytest fixture: A LOG INTERCEPTOR.
     # Capture everything from DEBUG up for this logger only, so tests can assert
     # the DEBUG/INFO/WARNING/ERROR records SmartLocator writes.
     caplog.set_level(logging.DEBUG, logger=LOGGER_NAME)
@@ -116,4 +117,6 @@ def test_broken_first_selector_falls_back_to_second_and_logs_error(
 
     # The fallback hit is reported so the broken primary gets fixed.
     warnings = [r.getMessage() for r in caplog.records if r.levelno == logging.WARNING]
+    # any(...) — “at least one message meets both conditions”
     assert any("fallback #2/2" in w and WORKING in w for w in warnings)
+    
