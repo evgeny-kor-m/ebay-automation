@@ -45,6 +45,7 @@ Layer structure and dependency flow (circular imports are prohibited):
 - Use `git mv` to move files (preserves history).
 - Preserve LF line endings; never rewrite whole files just to change a few lines.
 - Test file names must be unique across `tests/` (no `__init__.py` in test folders):  e.g. `test_smart_locator.py` in unit, `test_smart_locator_playwright.py` in integration.
+- Run tests via `make unit` / `make integration`. Never add `-p no:logging`:  it disables the caplog fixture that unit tests rely on.
 
 ## What to avoid
 - Do not weaken or remove assertions to make a test pass. If a test fails, find the cause and report it.
