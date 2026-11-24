@@ -54,7 +54,7 @@ class SmartLocator:
                 )
                 continue
             except PlaywrightError as e:
-                reason = str(e).splitlines()[0]
+                reason = str(e).splitlines()[0]   # take only one line to log
                 self.logger.error(
                     f"[{element.name}] broken selector #{attempt}/{total}: {loc} — {reason}"
                 )
@@ -92,5 +92,6 @@ class SmartLocator:
         Raises ElementNotFoundError if none matched.
         """
         return self._resolve(root, element, state)
+        
 
     # def exists(self, root: Page | Locator, element: Element) -> bool: ...
